@@ -8,7 +8,7 @@ def print_usage():
     print("Commands: folders, files, list, pwd, cd, delete, rename, copy, move, info")
 
 def create_folders(args):
-    if not args:
+    if not args:  # If no arguments are provided
         print("Error: Please provide folder name(s)")
         return
     
@@ -18,8 +18,10 @@ def create_folders(args):
                 os.mkdir(arg)
                 print(f"Folder created: {arg}")
             else:
-                path = arg.replace(",", os.sep)
-                os.makedirs(path, exist_ok=True)
+                # Different OS uses different path separators (\,/)
+                path = arg.replace(",", os.sep)  
+                # Don't crash if folder already exists
+                os.makedirs(path, exist_ok=True) 
                 print(f"Folder created: {path}")
 
         except FileExistsError:
@@ -32,6 +34,7 @@ def create_files(args):
     
     for arg in args:
         try:
+            # 'x' mode means exclusive, throws error if file already exists
             with open(arg, 'x'):
                 pass
                 print(f"File created: {arg}")
@@ -41,13 +44,14 @@ def create_files(args):
 
 def list_contents():
     try:
+        # '.' for current working directory
         items = os.listdir('.')
         if not items:
             print("Empty Directory")
             return
         
-        folders = []
-        files = []
+        folders = []  # For printing folders first
+        files = []    # Then files
         
         for item in items:
             if os.path.isdir(item):
@@ -85,8 +89,8 @@ def delete_items(args):
             continue
 
         try:
-            if os.path.isdir(arg):
-                shutil.rmtree(arg)
+            if os.path.isdir(arg):  # If foldere
+                shutil.rmtree(arg)  # Delete the whole tree
                 print(f"Folder deleted: {arg}")
             else:
                 os.remove(arg)
@@ -136,6 +140,7 @@ def copy_item(args):
     
     try:
         if os.path.isdir(src):
+            # Don't crash if folder already exists
             shutil.copytree(src, dst, dirs_exist_ok=True)
             print(f"Folder copied: '{src}' to '{dst}'")
         else:
@@ -167,7 +172,7 @@ def move_item(args):
     except Exception as e:
         print(f"Error moving '{src}': {e}")
 
-def folder_size(path):
+def folder_size(path):  # Calculating folder size using os.walk
     size = 0
     for dirpath, dirnames, filenames in os.walk(path):
         for f in filenames:
@@ -193,6 +198,8 @@ def file_info(args):
         else:
             size_kb = round(stats.st_size / 1024, 2)
 
+        # The st.ctime property is deprecated. Alternative is st.birthtime. 
+        # But st.ctime is used here because st.birthtime doesn't exist in Linux.
         created = datetime.fromtimestamp(stats.st_ctime).strftime('%Y-%m-%d %H:%M:%S')
         modified = datetime.fromtimestamp(stats.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
         accessed = datetime.fromtimestamp(stats.st_atime).strftime('%Y-%m-%d %H:%M:%S')
@@ -210,7 +217,8 @@ def file_info(args):
         print(f"Error retrieving info for '{args[0]}': {e}")
 
 def main():
-    if len(sys.argv) < 2:
+    # If not enough arguments are provided
+    if len(sys.argv) < 2: 
         print_usage()
         sys.exit(1)
 
