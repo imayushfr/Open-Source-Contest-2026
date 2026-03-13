@@ -7,8 +7,7 @@ OSW-ME24B1076/
 ├── app.py         
 ├── app.bat         
 ├── README.md       
-├── LICENSE 
-└── .gitignore
+└── LICENSE 
 ```
 ## Language Used
 ### Python 3
