@@ -1,8 +1,7 @@
 # File Management CLI System written in Python
 
 ## Folder Structure
-
-```text
+```
 OSW-ME24B1076/
 ├── app.py         
 ├── app.bat         
@@ -10,10 +9,10 @@ OSW-ME24B1076/
 └── LICENSE 
 ```
 ## Language Used
-### Python 3
+Python 3
 
 ## Libraries Used
-### os, sys, shutil, datetime
+os, sys, shutil, datetime
 
 ## Feature Description
 
@@ -31,14 +30,14 @@ OSW-ME24B1076/
 | Move files             | Move a file or folder to another location           | `app move <source> <destination>`  |
 | Show file details      | Display metadata such as size and creation date     | `app info <file>`                  |
 
-- Error handling and clear error messages are provided.
-- SOLID principles, human-readable, white spaces and clean code practices are followed as much as possible.
+* Error handling and clear error messages are provided.
+* SOLID principles, human-readable, white spaces and clean code practices are followed as much as possible.
 
 
 ## Dependencies
+Python 3.x.
 
-### Python 3.x. 
-### No external dependencies
+*No external dependencies*
 
 ## How to run on your local machine
 
